@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS // Handling with VS scanf alerts xd
+
 #include <stdio.h>
 #include <locale.h>
 #include <stdbool.h>
@@ -25,7 +27,7 @@ void peopleListInitialization(void) {
 		strncpy(peopleList[i].date, "NULL", 4);
 		peopleList[i].lotNumber = 0;
 	};
-	//printf(" \nA inicialização foi feita com sucesso!");
+	//printf(" \nA inicializaÃ§Ã£o foi feita com sucesso!");
 };
 
 void registerVaccine(void) { //	CADASTRO
@@ -38,26 +40,26 @@ void registerVaccine(void) { //	CADASTRO
 
 		//	NOME
 		printf("Digite o nome:\n");
-		scanf(" %s", peopleList[v].name);
+		scanf(" %[^\n]s", peopleList[v].name);
 		fflush(stdin);
 
 		//	CPF
 		printf("Digite o CPF:\n");
-		scanf(" %s", peopleList[v].cpf);
+		scanf(" %[^\n]s", peopleList[v].cpf);
 		fflush(stdin);
 
 		//	VACINA
 		printf("Digite a vacina utilizada:\n");
-		scanf(" %s", peopleList[v].vaccine);
+		scanf(" %[^\n]s", peopleList[v].vaccine);
 		fflush(stdin);
 
 		//	DATA
-		printf("Digite a data de aplicação:\n");
-		scanf(" %s", peopleList[v].date);
+		printf("Digite a data de aplicaÃ§Ã£o:\n");
+		scanf(" %[^\n]s", peopleList[v].date);
 		fflush(stdin);
 
-		//	NÚMERO DE LOTE
-		printf("Digite o número de lote:\n");
+		//	NÃšMERO DE LOTE
+		printf("Digite o nÃºmero de lote:\n");
 		scanf(" %ld", &peopleList[v].lotNumber);
 		fflush(stdin);
 
@@ -68,32 +70,41 @@ void registerVaccine(void) { //	CADASTRO
 }
 
 void listVaccinedPeople(void) {
+	bool legalEntity = false;
 	for (int i = 0; i < 10; i++) {
-		printf(" \n Código: %d", peopleList[i].id);
-		printf(" \n Nome: %s", peopleList[i].name);
-		printf(" \n CPF: %s", peopleList[i].cpf);
-		printf(" \n Vacina aplicada: %s", peopleList[i].vaccine);
-		printf(" \n Data de aplicação: %s", peopleList[i].date);
-		printf(" \n Número de lote: %ld", peopleList[i].lotNumber);
-		printf(" \n ===============================================");
+		if (peopleList[i].lotNumber != 0) {
+			printf(" \n CÃ³digo: %d", peopleList[i].id);
+			printf(" \n Nome: %s", peopleList[i].name);
+			printf(" \n CPF: %s", peopleList[i].cpf);
+			printf(" \n Vacina aplicada: %s", peopleList[i].vaccine);
+			printf(" \n Data de aplicaÃ§Ã£o: %s", peopleList[i].date);
+			printf(" \n NÃºmero de lote: %ld", peopleList[i].lotNumber);
+			printf(" \n ===============================================");
+			legalEntity = true;
+		};
+	};
+	if (!legalEntity) {
+		printf(" \n NinguÃ©m foi cadastrado.");
 	};
 };
 
 void cpfSearch(char arry[15]) {
+	bool foundOne = false;
 	for (int i = 0; i < 10; i++) {
-		int teste = strcmp(peopleList[i].cpf, arry);
-		if (teste == 0) {
-			printf(" \n Código: %d", peopleList[i].id);
+		int searchResult = strcmp(peopleList[i].cpf, arry);
+		if (searchResult == 0) {
+			printf(" \n CÃ³digo: %d", peopleList[i].id);
 			printf(" \n Nome: %s", peopleList[i].name);
 			printf(" \n CPF: %s", peopleList[i].cpf);
 			printf(" \n Vacina aplicada: %s", peopleList[i].vaccine);
-			printf(" \n Data de aplicação: %s", peopleList[i].date);
-			printf(" \n Número de lote: %ld", peopleList[i].lotNumber);
+			printf(" \n Data de aplicaÃ§Ã£o: %s", peopleList[i].date);
+			printf(" \n NÃºmero de lote: %ld", peopleList[i].lotNumber);
 			printf(" \n ===============================================");
-		}
-		else {
-			printf(" \n CPF não encontrado.");
+			foundOne = true;
 		};
+	};
+	if (!foundOne) {
+		printf(" \n CPF nÃ£o encontrado.");
 	};
 };
 
@@ -102,7 +113,7 @@ void mainMenu(void) {
 	while (goon) {
 		int menuOption = 0;
 		printf("\n1 - Cadastrar vacina\n");
-		printf("2 - Listar aplicações\n");
+		printf("2 - Listar aplicaÃ§Ãµes\n");
 		printf("3 - Consulta por CPF\n");
 		printf("4 - Sair\n");
 		scanf(" %d", &menuOption);
@@ -116,14 +127,15 @@ void mainMenu(void) {
 			break;
 		case 3:
 			printf("Insira o CPF para consulta: ");
-			scanf(" %s", cpfForSearch);
+			scanf(" %[^\n]s", cpfForSearch);
+			fflush(stdin);
 			cpfSearch(cpfForSearch);
 			break;
 		case 4:
 			goon = 0;
 			break;
 		default:
-			printf("Escolha inválida.");
+			printf("Escolha invÃ¡lida.");
 			break;
 		}
 	};
