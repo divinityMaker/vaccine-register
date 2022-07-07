@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS // Handling with VS scanf alerts xd
-
 #include <stdio.h>
 #include <locale.h>
 #include <stdbool.h>
@@ -59,14 +57,13 @@ void registerVaccine(void) { //	CADASTRO
 		fflush(stdin);
 
 		//	NÚMERO DE LOTE
-		printf("Digite o número de lote:\n");
+		printf("Digite o número do lote:\n");
 		scanf(" %ld", &peopleList[v].lotNumber);
 		fflush(stdin);
 
 		v += 1;
 		x = false;
 	}
-	//printf(" %d", v);
 }
 
 void listVaccinedPeople(void) {
@@ -79,7 +76,7 @@ void listVaccinedPeople(void) {
 			printf(" \n Vacina aplicada: %s", peopleList[i].vaccine);
 			printf(" \n Data de aplicação: %s", peopleList[i].date);
 			printf(" \n Número de lote: %ld", peopleList[i].lotNumber);
-			printf(" \n ===============================================");
+			printf(" \n ==================================");
 			legalEntity = true;
 		};
 	};
@@ -88,7 +85,7 @@ void listVaccinedPeople(void) {
 	};
 };
 
-void cpfSearch(char arry[15]) {
+void cpfSearch(char arry[14]) {
 	bool foundOne = false;
 	for (int i = 0; i < 10; i++) {
 		int searchResult = strcmp(peopleList[i].cpf, arry);
@@ -99,7 +96,7 @@ void cpfSearch(char arry[15]) {
 			printf(" \n Vacina aplicada: %s", peopleList[i].vaccine);
 			printf(" \n Data de aplicação: %s", peopleList[i].date);
 			printf(" \n Número de lote: %ld", peopleList[i].lotNumber);
-			printf(" \n ===============================================");
+			printf(" \n ==================================");
 			foundOne = true;
 		};
 	};
